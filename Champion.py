@@ -35,7 +35,6 @@ class Champion:
     def __eq__(self, other):
         return self.name == other.name
 
-
     #def showIcon(self):
     #    plt.imshow(img)
     #    plt.show()
@@ -64,8 +63,6 @@ class Champion:
                 bestWinrate = win
                 bestIndex = i
         return winrates[bestIndex]
-
-
 
     #Given an id number, and Data Dragon, returns all champion info
     def getChampInfoById(champId, dataDragon):
