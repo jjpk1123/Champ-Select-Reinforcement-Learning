@@ -5,6 +5,34 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import copy
 
+#TODO: Idea to simplify Champion memory size: Create a SimpleChampion class and have Champion extend SimpleChampion.
+#TODO: SimpleChampion will then have less data. What data to trim? Not sure.
+
+
+#The Champion.py class is responsible for all data related to a Champion. It holds the following data:
+
+#name: The human-recognizable identifier for the Champion, such as "Aatrox" as shown above.
+#id: The consistent identifier for grabbing a champion from Data Dragon or Champion.gg, such as '266'.
+#winrate: The averaged winrate over all of the Champion's roles.
+#roles: Any one champion can have any combination of the following entires of this list as their roles:
+#
+#    [TOP, JUNGLE, MIDDLE, DUO_CARRY, DUO_SUPPORT, SYNERGY, ADCSUPPORT].
+#    TOP, JUNGLE, MIDDLE, DUO_CARRY, DUO_SUPPORT: describe what is known as a "lane assignment". In the community,
+#       these are what people think of when they think of roles in a composition within League of Legends.
+#       In this program, I will limit each team of 5 to one of each within this list. Can't make a team with 5
+#       DUO_SUPPORT, for example.
+#    SYNERGY: refers to two champions played on the same team, either playing in any role as long as it is not the same role.
+#    ADCSUPPORT: refers to part of the DUO_SUPPORT/DUO_CARRY relationship, and can be thought of as BOTTOM SYNERGY since
+#        DUO_SUPPORT and DUO_CARRY both play in the bottom lane.
+#
+#matchups: A list in the form -[ROLE: {ENEMY/ALLY: WINRATE WITH/AGAINST}, ...]
+#This structure describes how Champion A relates to Champion B in terms of winrate. For every entry in the Champion's roles list, there is an entry in this list which goes more in depth. This could, for example, be used to find the winrate between Aatrox and Alistar, or the winrate when Aatrox and Alistar are on the same team.
+
+#Use it in this way:
+#   Champion(64, championgg, dd)
+#The __repr__ will print this:
+#   LeeSin, 64: ['TOP', 'JUNGLE', 'MIDDLE', 'DUO_CARRY', 'DUO_SUPPORT']
+
 # Holds information about one champion
 class Champion:
 
