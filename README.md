@@ -30,3 +30,6 @@ The outside tools I am using are:
    
 # Current Status:
     * January 30th, 2019: This project is being converted from a Jupyter Notebook file submitted as a program/essay in my final semester at CSU. As such, the program is not currently working. But, it is also mostly needing refactoring and a slight redesign.
+
+# Viewing the Jupyter Notebook
+Download and open [this file](https://github.com/jjpk1123/Champ-Select-Reinforcement-Learning/blob/master/Pecquet-SemesterProject.ipynb) in a Jupyter Notebook session to view the submitted project. This is the best way to learn about my intention and execution, particularly during the refactoring process.
