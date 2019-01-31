@@ -27,3 +27,6 @@ The outside tools I am using are:
    * Riot Games' Data Dragon: Documentation found here: https://developer.riotgames.com/static-data.html
         * This tool will allow me to do a great number of things to make my software easily usable (for me) and to make the output pretty! This service allows me to get images of champions, abilities, etc and more importantly for development it will allow me to get champion's descriptions by id (given to me from champion.gg requests).
    * Reinforcement Learning Algorithm: Taken from Dr. Andersons Fall 2018 'Intro to Artificial Intelligence' course at Colorado State University, and altered to fit my programs needs.  
+   
+# Current Status:
+    * January 30th, 2019: This project is being converted from a Jupyter Notebook file submitted as a program/essay in my final semester at CSU. As such, the program is not currently working. But, it is also mostly needing refactoring and a slight redesign.
