@@ -12,7 +12,8 @@ Now, how do we cut this number up so that this problem is doable? We can potenti
 My reasoning is that the first 4 choices per team (8 choices total) will, at worst, still allow choices of every remaining champion. But once you get to your last choice, you only have one role. I'm assuming the worst again, in that the last role picked is Top. 
 How can we make the players pick things more randomly in a way that reflects a real game? We could have a mechanism for banning either a high general win-rate champ, or a random champ. This would mean that the most overpowered compositions would be found less often, and we wouldnt adhere to the meta quite as much. Making bans random would also reduce the amount of choices by a very significant amount. We can also make the opponent player randomly pick champions in order to increase processing time.
 
-((132)*(131)*(130)*(129)*(128)*(127)*(126)*(125)*(107)*(107))/(10*9*8*7*6*5*4*3*2*(132-10)) = 1,920,070,742,519
+((132) * (131) * (130) * (129) * (128) * (127) * (126) * (125) * (107) * (107)) / (10 * 9 * 8 * 7 * 6 * 5 * 4 * 3 * 2 * (132-10)) = 1,920,070,742,519
+
 
 My naivete brought me into this project thinking "it won't be so bad, what could go wrong?".
 Well I'll tell you right now, the experiment failed because the problem is just too large to train the AI in a decent amount of time given the methods, organization, etc that I came up with. 
