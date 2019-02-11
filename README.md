@@ -10,7 +10,7 @@ As of now, the system is being worked on for general purpose usage. It was writt
 This section will be updated once the program is updated.
 
 # Viewing the Jupyter Notebook
-Download and open [this file](https://github.com/jjpk1123/Champ-Select-Reinforcement-Learning/blob/master/Pecquet-SemesterProject.ipynb) in a Jupyter Notebook session to view the submitted project, with the ability to run commands in the interpreted session. Alternatively, the file is viewable on that GitHub page, and you can read through it!
+Download and open [this file](https://github.com/jjpk1123/Champ-Select-Reinforcement-Learning/blob/master/JUPYTER_NOTEBOOK/Pecquet-SemesterProject.ipynb) in a Jupyter Notebook session to view the submitted project, with the ability to run commands in the interpreted session. Alternatively, the file is viewable on that GitHub page, and you can read through it!
 
 # Outside Tools
 The outside tools I am using are:
