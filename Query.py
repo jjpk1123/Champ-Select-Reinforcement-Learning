@@ -14,3 +14,4 @@ championgg = req.get("http://api.champion.gg/v2/champions?&limit=500&api_key="+a
 if __name__== "__main__":
     req.get("http://api.champion.gg/v2/champions?&limit=500&api_key=" + api_key).json()
     dd = req.get("http://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion.json").json()
+    #hello 
