@@ -42,8 +42,7 @@ class Teacher:
             Qs = np.array([Q.get(self.stateMoveTuple(state, move), 0) for move in validMoves])
             return validMoves[np.argmax(Qs)]
 
-    def trainQ(self, nRepetitions, learningRate, epsilonDecayFactor, league, validChampMovesF, validBanMovesF,
-               makeChampMoveF):
+    def trainQ(self, nRepetitions, learningRate, epsilonDecayFactor, league, validChampMovesF, validBanMovesF, makeChampMoveF):
         rho = learningRate  # I left this assignment here because rho is more compact.
         epsilonDecayRate = epsilonDecayFactor  # Not sure why these are named differently, just reused assignment.
         epsilon = 1.0  # Start at 1 and decay
