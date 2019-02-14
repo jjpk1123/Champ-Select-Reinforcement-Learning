@@ -11,7 +11,7 @@ import ChampionSelect
 class Teacher:
 
     def __init__(self):
-        x = 0
+        x = 0 #Placeholder
 
     def stateMoveTuple(self, state, move):
         blue = state['blue']
