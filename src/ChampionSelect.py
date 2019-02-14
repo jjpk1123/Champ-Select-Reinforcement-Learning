@@ -10,52 +10,52 @@ import Champion
 class ChampionSelect:
 
     def __init__(self):
-        self.L = League()
+        self.L = League.League()
 
 
-    def getValidChampMoves(self, league, comp1, comp2, bans=[]):
-        champList = self.L.getListOfChamps()
+    #def getValidChampMoves(self, league, comp1, comp2, bans=[]):
+        #champList = self.L.getListOfChamps()
 
         # Get the remaining available roles:
-        allRoles = ['TOP', 'JUNGLE', 'MIDDLE', 'DUO_CARRY', 'DUO_SUPPORT']
-        takenRoles = list(comp1.keys())
-        availableRoles = [x for x in allRoles if x not in takenRoles]
+    #    allRoles = ['TOP', 'JUNGLE', 'MIDDLE', 'DUO_CARRY', 'DUO_SUPPORT']
+    #    takenRoles = list(comp1.keys())
+    #    availableRoles = [x for x in allRoles if x not in takenRoles]
 
         # Get the remaining available champions:
-        takenChamps = list(comp1.values()) + list(comp2.values()) + bans
-        availableChamps = [x for x in champList if x not in takenChamps]
-        return [{role: champ} for champ in availableChamps for role in champ.roles if role in availableRoles]
+    #    takenChamps = list(comp1.values()) + list(comp2.values()) + bans
+    #    availableChamps = [x for x in champList if x not in takenChamps]
+    #    return [{role: champ} for champ in availableChamps for role in champ.roles if role in availableRoles]
 
-    def getValidBanMoves(self, league, bans=[]):
-        champList = self.L.getListOfChamps()
+    #def getValidBanMoves(self, league, bans=[]):
+    #    champList = self.L.getListOfChamps()
 
-        # Get the remaining available champions:
-        takenChamps = bans
-        availableChamps = [x for x in champList if x.name not in takenChamps]
-        return [champ for champ in availableChamps]
-        # return [champ for champ in availableChamps for role in champ.roles if role in availableRoles] + ['None']
+    #    # Get the remaining available champions:
+    #    takenChamps = bans
+    #    availableChamps = [x for x in champList if x.name not in takenChamps]
+    #    return [champ for champ in availableChamps]
+    #    # return [champ for champ in availableChamps for role in champ.roles if role in availableRoles] + ['None']
 
     # A move looks like: {'JUNGLE', Akali}
-    def makeChampMove(self, league, move, comp1, comp2, bans=[]):
+    #def makeChampMove(self, league, move, comp1, comp2, bans=[]):
         # Make sure the move is valid:
-        if move not in self.getValidChampMoves(league, comp1, comp2, bans):
+    #    if move not in self.getValidChampMoves(league, comp1, comp2, bans):
             # If it is an invalid move, return the ally composition unchanged.
-            return comp1
+    #        return comp1
 
         # Set up a new copy of the comp
-        newComp = copy.deepcopy(comp1)
+    #    newComp = copy.deepcopy(comp1)
 
         # Make the move: Add the move to the comp
-        newComp[list(move.keys())[0]] = list(move.values())[0]
+    #    newComp[list(move.keys())[0]] = list(move.values())[0]
 
         # Return the new comp!
-        return newComp
+    #    return newComp
 
     def calcWinChance(self, league, comp1, comp2):
         # Gather comp1,2 info into separate structures
         roles = list(comp1.keys())
         champs = list(comp1.values())
-        badRoles = list(comp2.keys())
+        #badRoles = list(comp2.keys())
         badChamps = list(comp2.values())
 
         winrate = 0
@@ -76,7 +76,7 @@ class ChampionSelect:
             if not found:
                 # print(champ)
                 # print(matchups)
-                winrate += Champion.getWinrate(champ.matchups, roles[i])
+                winrate += Champion.Champion.getWinrate(champ.matchups, roles[i])
         return winrate / 5
 
     def winner(self, league, state):

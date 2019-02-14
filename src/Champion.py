@@ -45,7 +45,7 @@ class Champion:
         self.matchups = self.getAllMatchups(championId, championgg, dataDragon)
 
         # Roles in matchups that are not SYNERGY or ADCSUPPORT
-        self.roles = [role for role in list(self.getAllMatchups(championId, championgg, dd).keys()) \
+        self.roles = [role for role in list(self.getAllMatchups(championId, championgg, self.dd).keys()) \
                       if role != 'SYNERGY' and role != 'ADCSUPPORT']
 
         # Any non-zero positive integer found in the Data Dragon champion data
@@ -93,7 +93,7 @@ class Champion:
         return winrates[bestIndex]
 
     #Given an id number, and Data Dragon, returns all champion info
-    def getChampInfoById(champId, dataDragon):
+    def getChampInfoById(self, champId, dataDragon):
         for key, value in dataDragon['data'].items():
             if int(value['key']) == int(champId):
                 return value
@@ -104,10 +104,10 @@ class Champion:
         return [matchup for matchup in matchups if matchup['count'] >= limit]
 
     #[ROLE: {<ENEMY/ALLY Champion>: <Winrate AGAINST/WITH>}, ...}, ...]
-    def getAllMatchups(self, champId, championgg, dataDragon, limit=10):
+    def getAllMatchups(self, champId, championgg, dataDragon, api_key="e29bf7c5e411c43e2db51ceb2255e3d1", limit=10):
         #Every matchup
         champId = str(champId)
-        matchups = req.get("http://api.champion.gg/v2/champions/"+champId+"/matchups?&limit=500&api_key="+api_key).json()
+        matchups = req.get("http://api.champion.gg/v2/champions/" + champId + "/matchups?&limit=500&api_key=" + api_key).json()
 
         #All champions: {64: 'LeeSin',...}
         allChamps = self.getAllChamps(championgg, dataDragon)
@@ -133,11 +133,11 @@ class Champion:
                     #Figure out which champ_id is our champ, and which is the enemy, get the winrate AGAINST:
                     if int(x['_id']['champ2_id']) != int(champId):
                         enemyChamp = allChamps[x['_id']['champ2_id']]
-                        enemyChampId = x['_id']['champ2_id']
+                        #enemyChampId = x['_id']['champ2_id']
                         winrate = role_fm[i]['champ1']['winrate']
                     else:
                         enemyChamp = allChamps[x['_id']['champ1_id']]
-                        enemyChampId = x['_id']['champ1_id']
+                        #enemyChampId = x['_id']['champ1_id']
                         winrate = role_fm[i]['champ2']['winrate']
                     #Add this information to a dictionary
                     matchup = {}
@@ -180,13 +180,14 @@ class Champion:
                 total += 1
         return winrate/total
 
-    def getWinrate(self, matchups, role):
-        roleMatchups = matchups[role]
-        winrate = 0
-        total = 0
-        for matchup in roleMatchups:
-            winrate += list(matchup.values())[0]
-            total += 1
-        if total == 0:
-            return .5
-        return winrate/total
+    #TODO: Combine below method with above method
+    #def getWinrate(self, matchups, role):
+    #    roleMatchups = matchups[role]
+    #    winrate = 0
+    #    total = 0
+    #    for matchup in roleMatchups:
+    #        winrate += list(matchup.values())[0]
+    #        total += 1
+    #    if total == 0:
+    #        return .5
+    #    return winrate/total

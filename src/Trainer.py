@@ -30,7 +30,7 @@ class Teacher:
         return blueTuple, redTuple
 
     def epsilonChampGreedy(self, epsilon, Q, league, comp1, comp2, bans=[]):
-        validMoves = ChampionSelect.getValidChampMoves(league, comp1, comp2, bans)
+        validMoves = ChampionSelect.ChampionSelect.getValidChampMoves(league, comp1, comp2, bans)
         if np.random.uniform() < epsilon:
             # Random Move
             # print(" RANDOM NUMBER "+"\n" + str(np.random.choice(len(validMoves))))
