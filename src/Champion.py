@@ -12,7 +12,6 @@ import League
 
 class Champion:
 
-
     #TODO: Refactor/rethink how a champion is put together
     #What are it's essential components? 
     #What can be done in League once, and then used for each Champion?
@@ -22,13 +21,12 @@ class Champion:
         self.name = dataDragon['id']
         self.id = championId
         self.champInfo = getChampInfoById(championId, dataDragon)
-        #TODO: Put below line in League, as it references many champions
-        #self.matchups = getAllMatchupsById(championId, championgg, dataDragon)
         self.matchups = matchups
 
         # Roles in matchups that are not SYNERGY or ADCSUPPORT
         self.roles = [role for role in list(matchups.keys()) if role != 'SYNERGY' and role != 'ADCSUPPORT']
 
+        #TODO: Figure out this image stuff. Should this be handled here? 
         # Image information
         # self.icon = mpimg.imread('http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/' + self.dataDragon['image']['full'])
 
@@ -43,8 +41,8 @@ class Champion:
     #    plt.show()
 
     # Given a lane, gives the best match up aka the champ this champ has the highest win rate against/with.
-    def getBestMatchup(self, lane):
-        winrates = self.matchups[lane]
+    def getBestMatchup(self, role):
+        winrates = self.matchups[role]
         bestWinrate = 0
         bestIndex = -1
         for i in range(len(winrates)):
@@ -55,8 +53,8 @@ class Champion:
                 bestIndex = i
         return winrates[bestIndex]
 
-    def getWorstMatchup(self, lane):
-        winrates = self.matchups[lane]
+    def getWorstMatchup(self, role):
+        winrates = self.matchups[role]
         bestWinrate = 1
         bestIndex = -1
         for i in range(len(winrates)):
