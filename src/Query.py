@@ -1,11 +1,4 @@
-import urllib
-import copy
-import matplotlib
 import requests as req
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-import sys
 
 #The Class 'Query' is responsible for:
 #1. Making API calls to:

@@ -1,9 +1,3 @@
-import requests as req
-import urllib
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-import copy
 import Champion
 import Query
 
@@ -67,8 +61,9 @@ class League:
             allChampions[champion.id] = champion.name
         return allChampions
 
+    #TODO: Refactor. This is WAY too big of a method, way too complex.
     # [ROLE: {<ENEMY/ALLY Champion>: <Winrate AGAINST/WITH>}, ...}, ...]
-    def getAllMatchups(self, champId, api_key="e29bf7c5e411c43e2db51ceb2255e3d1", limit=10):
+    def getAllMatchups(self, champId, limit = 10):
         #Every matchup
         champId = str(champId)
         matchups = Query.getMatchups(champId)

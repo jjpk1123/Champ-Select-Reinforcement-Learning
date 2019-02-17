@@ -1,11 +1,3 @@
-import requests as req
-import urllib
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-import copy
-import League
-
 #The Class 'Champion' is responsible for:
 #1. Holding information about a single Champion
 #2. Accessing this information

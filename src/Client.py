@@ -1,7 +1,7 @@
 import os.path
 import sys
 
-import League as L
+import League
 
 #TODO: Function to get current up-to-date patch so that Data Dragon and Champion.gg are synced for keys.
         #Example: Champion is added in patch 9.2 and Champion.gg says there are 143 champions, but Data Dragon for patch 8.24 says 142 champions. Key error.
@@ -47,7 +47,7 @@ def learn(name):
         #TODO: Save the file in <name>League.txt for future reference (such as in play ? )
 
     #Make a new league
-    L.League()
+    League.League()
 
     #Train a new player using this league
     #trainQ = Trainer.Trainer.trainQ()
