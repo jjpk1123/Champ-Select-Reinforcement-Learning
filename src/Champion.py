@@ -14,16 +14,13 @@ class Champion:
 
     #TODO: Refactor/rethink how a champion is put together
     #What are it's essential components? 
+    # name, id, roles, matchups, 
     #What can be done in League once, and then used for each Champion?
     #What *needs* to be done in this constructor?
-    def __init__(self, championId, championgg, dataDragon, matchups):
-        print(dataDragon)
-        self.name = dataDragon['id']
-        self.id = championId
-        self.champInfo = getChampInfoById(championId, dataDragon)
+    def __init__(self, championgg, dataDragon, matchups):
+        self.name = dataDragon['name']
+        self.id = dataDragon['key']
         self.matchups = matchups
-
-        # Roles in matchups that are not SYNERGY or ADCSUPPORT
         self.roles = [role for role in list(matchups.keys()) if role != 'SYNERGY' and role != 'ADCSUPPORT']
 
         #TODO: Figure out this image stuff. Should this be handled here? 
@@ -39,6 +36,18 @@ class Champion:
     #def showIcon(self):
     #    plt.imshow(img)
     #    plt.show()
+
+    #Return a formatted string of the matchups for human reading
+    def getMatchups(self):
+        result = ""
+        for role in self.matchups:
+            result += str(role) + "\n"
+            for stats in self.matchups[role]:
+                enemy = list(stats.keys())[0]
+                winrate = list(stats.values())[0]
+                result += "{"+str(enemy)+":"+"{:.{}f}".format(winrate, 2)+"}, "
+            result += "\n"
+        return result
 
     # Given a lane, gives the best match up aka the champ this champ has the highest win rate against/with.
     def getBestMatchup(self, role):
@@ -95,11 +104,11 @@ def filterMatchups(matchups, limit=100):
 
 #Given a name, and Data Dragon, returns the champion's id
 def getChampIdByName(champName, dataDragon):
-    return dataDragon['data'][champName]['key']
+    return dataDragon[champName]['key']
 
 #Given an id number, and Data Dragon, returns all champion info
 def getChampInfoById(champId, dataDragon):
-    for key, value in dataDragon['data'].items():
+    for key, value in dataDragon.items():
         if int(value['key']) == int(champId):
             return value
     return None

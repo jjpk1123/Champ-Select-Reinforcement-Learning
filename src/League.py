@@ -31,11 +31,7 @@ class League:
         self.championgg = Query.getChampiongg(api_key)
         
         #dataDragon looks like:
-        #{'type': 'champion', 
-        # 'format': 'standAloneComplex', 
-        # 'version': '9.3.1', 
-        # 'data': {
-        # 'Aatrox': 
+        #{'Aatrox': 
         #   {'version': '9.3.1', 
         #   'id': 'Aatrox', 
         #   'key': '266',   
@@ -47,13 +43,18 @@ class League:
         #   'tags': ['Fighter', 'Tank'], 
         #   'partype': 'Blood Well', 
         #   'stats': {'hp': 580, 'hpperlevel': 80, 'mp': 0, 'mpperlevel': 0, 'movespeed': 345, 'armor': 33, 'armorperlevel': 3.25, 'spellblock': 32.1, 'spellblockperlevel': 1.25, 'attackrange': 175, 'hpregen': 8, 'hpregenperlevel': 0.75, 'mpregen': 0, 'mpregenperlevel': 0, 'crit': 0, 'critperlevel': 0, 'attackdamage': 60, 'attackdamageperlevel': 5, 'attackspeedperlevel': 2.5, 'attackspeed': 0.651}
-        # }, ...}
-        #}
+        # }
+        #,...}
         self.dataDragon = Query.getDataDragon(patch)
 
         #champions looks like:
-        self.champions = [Champion.Champion(Champion.getChampIdByName(name, self.dataDragon), self.championgg, self.dataDragon, self.getAllMatchups) for name in self.dataDragon['data']]
-        print(self.champions)
+        # name = "Aatrox"
+        # id = 266
+        # roles = ['TOP', 'JUNGLE', 'MIDDLE']
+        # matchups = ['TOP': 
+        #   {Ornn:0.47}, {Illaoi:0.48}, {Kled:0.52}, ...}
+        # ,...]
+        self.champions = [Champion.Champion(self.championgg, self.dataDragon[name], self.getAllMatchups(self.dataDragon[name]['key'])) for name in self.dataDragon]
 
     #Returns a list of each champion given a role
     def getChampsInRole(self, role):
@@ -72,7 +73,7 @@ class League:
             championggKey = self.championgg[i]['_id']['championId']
 
             #Iterate through all champions in datadragon
-            for key, value in self.dataDragon['data'].items():
+            for key, value in self.dataDragon.items():
 
                 #If the champion id's match...
                 if int(value['key']) == int(championggKey):
@@ -82,7 +83,7 @@ class League:
         return champs
 
     # #[ROLE: {<ENEMY/ALLY Champion>: <Winrate AGAINST/WITH>}, ...}, ...]
-    def getAllMatchups(self, champId, championgg, dataDragon, api_key="e29bf7c5e411c43e2db51ceb2255e3d1", limit=10):
+    def getAllMatchups(self, champId, api_key="e29bf7c5e411c43e2db51ceb2255e3d1", limit=10):
         #Every matchup
         champId = str(champId)
         matchups = Query.getMatchups(champId)
