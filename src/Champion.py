@@ -12,7 +12,13 @@ import League
 
 class Champion:
 
+
+    #TODO: Refactor/rethink how a champion is put together
+    #What are it's essential components? 
+    #What can be done in League once, and then used for each Champion?
+    #What *needs* to be done in this constructor?
     def __init__(self, championId, championgg, dataDragon, matchups):
+        print(dataDragon)
         self.name = dataDragon['id']
         self.id = championId
         self.champInfo = getChampInfoById(championId, dataDragon)

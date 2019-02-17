@@ -14,6 +14,7 @@ import Query
 class League:
     # A constructor if you know nothing, or know patch and/or api_key
     def __init__(self, patch="9.3.1", api_key="e29bf7c5e411c43e2db51ceb2255e3d1"):
+        #championgg looks like:
         #[{'_id': 
         #   {'championId': 412, 'role': 'DUO_SUPPORT'}, 
         # 'elo': 'PLATINUM,DIAMOND,MASTER,CHALLENGER', 
@@ -29,6 +30,7 @@ class League:
         # ,...]
         self.championgg = Query.getChampiongg(api_key)
         
+        #dataDragon looks like:
         #{'type': 'champion', 
         # 'format': 'standAloneComplex', 
         # 'version': '9.3.1', 
@@ -48,16 +50,19 @@ class League:
         # }, ...}
         #}
         self.dataDragon = Query.getDataDragon(patch)
-        
-        self.champions = [Champion.Champion(Champion.getChampIdByName(name, self.dataDragon), self.championgg, self.dataDragon) for name in self.dataDragon['data']]
 
-    #def getChampsInRole(self, role):
-    #    return [champ for champ in self.champions if role in champ.roles]
+        #champions looks like:
+        self.champions = [Champion.Champion(Champion.getChampIdByName(name, self.dataDragon), self.championgg, self.dataDragon, self.getAllMatchups) for name in self.dataDragon['data']]
+        print(self.champions)
 
-    #def getListOfChamps(self):
-    #    return [champ for champ in self.champions]
+    #Returns a list of each champion given a role
+    def getChampsInRole(self, role):
+        return [champ for champ in self.champions if role in champ.roles]
 
-    
+    #Returns a list of all champions in the league
+    def getListOfChamps(self):
+        return [champ for champ in self.champions]
+
     #Given champion.gg and Data Dragon champion data jsons, returns a dictionary of {id : champion name}
     def getAllChamps(self):
         champs = {}
@@ -77,50 +82,50 @@ class League:
         return champs
 
     # #[ROLE: {<ENEMY/ALLY Champion>: <Winrate AGAINST/WITH>}, ...}, ...]
-    # def getAllMatchups(self, champId, championgg, dataDragon, api_key="e29bf7c5e411c43e2db51ceb2255e3d1", limit=10):
-    #     #Every matchup
-    #     champId = str(champId)
-    #     matchups = req.get("http://api.champion.gg/v2/champions/" + champId + "/matchups?&limit=500&api_key=" + api_key).json()
+    def getAllMatchups(self, champId, championgg, dataDragon, api_key="e29bf7c5e411c43e2db51ceb2255e3d1", limit=10):
+        #Every matchup
+        champId = str(champId)
+        matchups = Query.getMatchups(champId)
 
-    #     #All champions: {64: 'LeeSin',...}
-    #     allChamps = League.getAllChamps(championgg, dataDragon)
+        #All champions: {64: 'LeeSin',...}
+        allChamps = self.getAllChamps()
 
-    #     #Filter the matchups, limiting it to only *limit* games as bottom threshold.
-    #     #For example if limit=10, trim off all matchups with less than 10 games played.
-    #     fm = self.filterMatchups(matchups, limit)
-    #     all_roles = ['TOP', 'JUNGLE', 'MIDDLE', 'DUO_CARRY', 'DUO_SUPPORT', 'SYNERGY', 'ADCSUPPORT']
-    #     all_matchups = {}
+        #Filter the matchups, limiting it to only *limit* games as bottom threshold.
+        #For example if limit=10, trim off all matchups with less than 10 games played.
+        fm = Champion.filterMatchups(matchups, limit)
+        all_roles = ['TOP', 'JUNGLE', 'MIDDLE', 'DUO_CARRY', 'DUO_SUPPORT', 'SYNERGY', 'ADCSUPPORT']
+        all_matchups = {}
 
-    #     #Iterate through each role type
-    #     for role in all_roles:
-    #         #Role_fm = role with filtered matchups. Looks at Lee Sin Jungle vs all(x) Jungle.
-    #         role_fm = [x for i, x in enumerate(fm) if fm[i]['_id']['role'] == role]
-    #         #print(role)
-    #         #print(role_fm)
+        #Iterate through each role type
+        for role in all_roles:
+            #Role_fm = role with filtered matchups. Looks at Lee Sin Jungle vs all(x) Jungle.
+            role_fm = [x for i, x in enumerate(fm) if fm[i]['_id']['role'] == role]
+            #print(role)
+            #print(role_fm)
 
-    #         #If there is at least one game...
-    #         if role_fm:
+            #If there is at least one game...
+            if role_fm:
 
-    #             role_matchup = []
-    #             for i, x in enumerate(role_fm):
-    #                 #Figure out which champ_id is our champ, and which is the enemy, get the winrate AGAINST:
-    #                 if int(x['_id']['champ2_id']) != int(champId):
-    #                     enemyChamp = allChamps[x['_id']['champ2_id']]
-    #                     #enemyChampId = x['_id']['champ2_id']
-    #                     winrate = role_fm[i]['champ1']['winrate']
-    #                 else:
-    #                     enemyChamp = allChamps[x['_id']['champ1_id']]
-    #                     #enemyChampId = x['_id']['champ1_id']
-    #                     winrate = role_fm[i]['champ2']['winrate']
-    #                 #Add this information to a dictionary
-    #                 matchup = {}
-    #                 matchup[enemyChamp] = winrate
+                role_matchup = []
+                for i, x in enumerate(role_fm):
+                    #Figure out which champ_id is our champ, and which is the enemy, get the winrate AGAINST:
+                    if int(x['_id']['champ2_id']) != int(champId):
+                        enemyChamp = allChamps[x['_id']['champ2_id']]
+                        #enemyChampId = x['_id']['champ2_id']
+                        winrate = role_fm[i]['champ1']['winrate']
+                    else:
+                        enemyChamp = allChamps[x['_id']['champ1_id']]
+                        #enemyChampId = x['_id']['champ1_id']
+                        winrate = role_fm[i]['champ2']['winrate']
+                    #Add this information to a dictionary
+                    matchup = {}
+                    matchup[enemyChamp] = winrate
 
-    #                 #Add it to the collection of role_matchups
-    #                 role_matchup.append(matchup)
-    #             #Add this role_matchup to all matchups
-    #             all_matchups[role] = role_matchup
-    #     return all_matchups
+                    #Add it to the collection of role_matchups
+                    role_matchup.append(matchup)
+                #Add this role_matchup to all matchups
+                all_matchups[role] = role_matchup
+        return all_matchups
 
     
 
