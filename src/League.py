@@ -62,21 +62,10 @@ class League:
 
     # Given champion.gg and Data Dragon champion data jsons, returns a dictionary of {id : champion name}
     def getAllChamps(self):
-        champs = {}
-
-        #Iterate through all champions in championgg
-        for i in range(len(self.championgg)):
-            championggKey = self.championgg[i]['_id']['championId']
-
-            #Iterate through all champions in datadragon
-            for key, value in self.dataDragon.items():
-
-                #If the champion id's match...
-                if int(value['key']) == int(championggKey):
-                    #... add it to the list, and go to next
-                    champs[championggKey] = key
-                    break
-        return champs
+        allChampions = {}
+        for champion in self.champions:
+            allChampions[champion.id] = champion.name
+        return allChampions
 
     # [ROLE: {<ENEMY/ALLY Champion>: <Winrate AGAINST/WITH>}, ...}, ...]
     def getAllMatchups(self, champId, api_key="e29bf7c5e411c43e2db51ceb2255e3d1", limit=10):
@@ -95,10 +84,9 @@ class League:
 
         #Iterate through each role type
         for role in all_roles:
+            
             #Role_fm = role with filtered matchups. Looks at Lee Sin Jungle vs all(x) Jungle.
             role_fm = [x for i, x in enumerate(fm) if fm[i]['_id']['role'] == role]
-            #print(role)
-            #print(role_fm)
 
             #If there is at least one game...
             if role_fm:

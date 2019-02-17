@@ -11,17 +11,12 @@ import League
 #2. Accessing this information
 
 class Champion:
-
-    #TODO: Refactor/rethink how a champion is put together
-    #What are it's essential components? 
-    # name, id, roles, matchups, 
-    #What can be done in League once, and then used for each Champion?
-    #What *needs* to be done in this constructor?
     def __init__(self, championgg, dataDragon, matchups):
         self.name = dataDragon['name']
         self.id = dataDragon['key']
         self.matchups = matchups
         self.roles = [role for role in list(matchups.keys()) if role != 'SYNERGY' and role != 'ADCSUPPORT']
+        #TODO: Create synergy data structure and usage (BIG TODO)
 
         #TODO: Figure out this image stuff. Should this be handled here? 
         # Image information

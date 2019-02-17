@@ -59,7 +59,6 @@ def learn(name):
     # TODO: Write the Q table to a file! :)
 
     #print("writing a test file: " + str(qFile.name))
-    #qFile.write("asdf") 
     #qFile.write(trainQ.toString OR trainQ.toJSON OR someting similar)
 
     #TODO: Ask if the user would like to immediately play?
