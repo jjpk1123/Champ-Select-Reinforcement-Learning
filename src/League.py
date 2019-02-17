@@ -56,15 +56,11 @@ class League:
         # ,...]
         self.champions = [Champion.Champion(self.championgg, self.dataDragon[name], self.getAllMatchups(self.dataDragon[name]['key'])) for name in self.dataDragon]
 
-    #Returns a list of each champion given a role
+    # Returns a list of each champion given a role
     def getChampsInRole(self, role):
         return [champ for champ in self.champions if role in champ.roles]
 
-    #Returns a list of all champions in the league
-    def getListOfChamps(self):
-        return [champ for champ in self.champions]
-
-    #Given champion.gg and Data Dragon champion data jsons, returns a dictionary of {id : champion name}
+    # Given champion.gg and Data Dragon champion data jsons, returns a dictionary of {id : champion name}
     def getAllChamps(self):
         champs = {}
 
@@ -82,7 +78,7 @@ class League:
                     break
         return champs
 
-    # #[ROLE: {<ENEMY/ALLY Champion>: <Winrate AGAINST/WITH>}, ...}, ...]
+    # [ROLE: {<ENEMY/ALLY Champion>: <Winrate AGAINST/WITH>}, ...}, ...]
     def getAllMatchups(self, champId, api_key="e29bf7c5e411c43e2db51ceb2255e3d1", limit=10):
         #Every matchup
         champId = str(champId)
@@ -127,6 +123,3 @@ class League:
                 #Add this role_matchup to all matchups
                 all_matchups[role] = role_matchup
         return all_matchups
-
-    
-
