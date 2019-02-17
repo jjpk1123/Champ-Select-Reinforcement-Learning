@@ -3,6 +3,9 @@ import sys
 
 import League as L
 
+#TODO: Function to get current up-to-date patch so that Data Dragon and Champion.gg are synced for keys.
+        #Example: Champion is added in patch 9.2 and Champion.gg says there are 143 champions, but Data Dragon for patch 8.24 says 142 champions. Key error.
+
 
 #Preconditions: 
     # 1. A filename to store a new Q table
@@ -12,41 +15,54 @@ import League as L
     # 2. A league file is written for future training or testing or playing!
 def learn(name):
     print("learning...")
+    #TODO: Once the learning system is figured out, a persistent data system will be figured out so as to reuse Q tables once theyre created.
     # 1. Q file
-    qFile = None
-    if os.path.isfile(str(sys.argv[2]) + "Q.txt"):
+    #qFile = None
+    #if os.path.isfile(str(sys.argv[2]) + "Q.txt"):
         #If file exists, inform user and exit
-        print("Q file already exists, try the operation 'play'!")
-        return
-    else: 
+    #    print("Training already complete (Q file already exists), try the operation 'play'!")
+    #    return
+    #else: 
         # Open file, intention to write
-        qFile = open(str(sys.argv[2]) + "Q.txt", "w")
-
+    #    qFile = open(str(sys.argv[2]) + "Q.txt", "w")
+    
     # 2. League file
-    leagueFile = None
-    league = None
-    if os.path.isfile(str(sys.argv[2]) + "League.txt"):
+    #leagueFile = None
+    #league = None
+
+    #Check if there is a league file
+    #if os.path.isfile(str(sys.argv[2]) + "League.txt"):
         # Open it for reading
-        leagueFile = open(str(sys.argv[2]) + "League.txt", "r")
+        #leagueFile = open(str(sys.argv[2]) + "League.txt", "r")
         #TODO: make a new League object with the existing leagueFile
-        league = L.League() #TODO: Delete once above is fixed
-    else:
+
+        #For now, we will just make a new League using the API's
+        #league = L.League()
+    #else:
         # Open it for writing
-        leagueFile = open(str(sys.argv[2]) + "League.txt", "w")
+        #leagueFile = open(str(sys.argv[2]) + "League.txt", "w")
         #Make new League object
             #TODO: Ask for parameters (patch, api_key). No input means set to default (patch="8.24.1", api_key="e29bf7c5e411c43e2db51ceb2255e3d1")
-        league = L.League() #Default params
+        #league = L.League() 
         #TODO: Save the file in <name>League.txt for future reference (such as in play ? )
-        
+
+    #Make a new league
+    league = L.League()
+
+    #Train a new player using this league
+    #trainQ = Trainer.Trainer.trainQ()
+
     # TODO: Train!
     # trainQ = Trainer.Trainer.trainQ(<params>)
         # TODO: Ask for parameters, recommending certain ones (nRepetitions, learningRate, epsilonDecayFactor)
             # trainQ(self, nRepetitions, learningRate, epsilonDecayFactor, league, validChampMovesF, validBanMovesF, makeChampMoveF)
     # TODO: Write the Q table to a file! :)
 
-    print("writing a test file: " + str(qFile.name))
-    qFile.write("asdf") 
+    #print("writing a test file: " + str(qFile.name))
+    #qFile.write("asdf") 
     #qFile.write(trainQ.toString OR trainQ.toJSON OR someting similar)
+
+    #TODO: Ask if the user would like to immediately play?
 
 def play(name):
     print("playing...")

@@ -7,8 +7,13 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import sys
 
-###The Query.py class is responsible for interacting with the Data Dragon API and the Champion.gg API.
+#The Class 'Query' is responsible for:
+#1. Making API calls to:
+#   a. Champion.gg
+#   b. DataDragon
 
+def getChampiongg(api_key = "e29bf7c5e411c43e2db51ceb2255e3d1"):
+    return req.get("http://api.champion.gg/v2/champions?&limit=500&api_key=" + api_key).json()
 
-api_key = 'e29bf7c5e411c43e2db51ceb2255e3d1' #This will be used in many functions down the road, so I declare it now.
-championgg = req.get("http://api.champion.gg/v2/champions?&limit=500&api_key="+api_key).json()
+def getDataDragon(patch):
+    return req.get("http://ddragon.leagueoflegends.com/cdn/" + patch + "/data/en_US/champion.json").json()
