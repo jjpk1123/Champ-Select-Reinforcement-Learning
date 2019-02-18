@@ -47,7 +47,9 @@ def learn(name):
         #TODO: Save the file in <name>League.txt for future reference (such as in play ? )
 
     #Make a new league
-    League.League()
+    L = League.League()
+    #print(L.champions[0])
+    #print(L.champions[0].getMatchups())
 
     #Train a new player using this league
     #trainQ = Trainer.Trainer.trainQ()
