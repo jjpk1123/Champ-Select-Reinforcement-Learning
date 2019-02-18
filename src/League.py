@@ -61,15 +61,11 @@ class League:
             allChampions[champion.id] = champion.name
         return allChampions
 
-    #TODO: Refactor. This is WAY too big of a method, way too complex.
     # [ROLE: {<ENEMY/ALLY Champion>: <Winrate AGAINST/WITH>}, ...}, ...]
     def getAllMatchups(self, champId, limit = 10):
         #Every matchup
         champId = str(champId)
         matchups = Query.getMatchups(champId)
-
-        #All champions: {64: 'LeeSin',...}
-        allChamps = self.getAllChamps()
 
         #Filter the matchups, limiting it to only *limit* games as bottom threshold.
         #For example if limit=10, trim off all matchups with less than 10 games played.
@@ -85,24 +81,20 @@ class League:
 
             #If there is at least one game...
             if role_fm:
-
                 role_matchup = []
-                for i, x in enumerate(role_fm):
-                    #Figure out which champ_id is our champ, and which is the enemy, get the winrate AGAINST:
-                    if int(x['_id']['champ2_id']) != int(champId):
-                        enemyChamp = allChamps[x['_id']['champ2_id']]
-                        #enemyChampId = x['_id']['champ2_id']
-                        winrate = role_fm[i]['champ1']['winrate']
-                    else:
-                        enemyChamp = allChamps[x['_id']['champ1_id']]
-                        #enemyChampId = x['_id']['champ1_id']
-                        winrate = role_fm[i]['champ2']['winrate']
-                    #Add this information to a dictionary
+
+                for entry in role_fm:
                     matchup = {}
-                    matchup[enemyChamp] = winrate
+                    #If champ1 is our champ...
+                    if int(entry['_id']['champ1_id']) == int(champId):
+                        matchup [entry['_id']['champ2_id']] = entry['champ1']['winrate']
+                    #Else, champ2 is our champ
+                    else:
+                        matchup [entry['_id']['champ1_id']] = entry['champ2']['winrate']
 
                     #Add it to the collection of role_matchups
                     role_matchup.append(matchup)
+
                 #Add this role_matchup to all matchups
                 all_matchups[role] = role_matchup
         return all_matchups
